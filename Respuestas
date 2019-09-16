@@ -1,0 +1,19 @@
+¿emite algún aviso el proceso de compilado o enlazado?
+Si, el error de ld fue: 
+ld: aviso: no se puede encontrar el símbolo de entrada _start; se usa por defecto 0000000000100000
+El comando --entry de ld hace que se le indique donde comenzará el programa. Con esto podemos corregir este error.
+
+El consumo de CPU del kernel es: 100,7% segun el comando top
+Lo que está haciendo es ejecutar un loop infinito con ninguna instruccion dentro.
+
+
+una vez invocado hlt ¿cuándo se reanuda la ejecución?
+Se reanuda cuando ocurra una interrupcion
+
+
+Uso de procesador:
+                USO       Eventos/seg
+Sin hlt:    990,7 ms/s      0,00      
+Con hlt:     7,5 ms/s       152,6       
+
+
