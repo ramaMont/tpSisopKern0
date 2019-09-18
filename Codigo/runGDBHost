@@ -1,0 +1,2 @@
+#!/bin/bash
+qemu-system-i386 -serial mon:stdio -S -kernel kern0 -gdb tcp:127.0.0.1:7508
