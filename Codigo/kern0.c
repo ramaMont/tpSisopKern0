@@ -10,16 +10,16 @@ static void vga_write(const char *s, int linea, int color){
 
 
 void comienzo(void) {
-	volatile char *buf = VGABUF;
+//	volatile char *buf = VGABUF;
 /*
 	*buf++ = 79;
 	*buf++ = 47;
 	*buf++ = 75;
 	*buf++ = 47;
 */
-	char *string="HOLA MUNDO";
+//	char *string="HOLA MUNDO";
 
-	vga_write("Hola Mundo", 2, 2);
+//	vga_write("Hola Mundo", 2, 2);
 
 
     while (1)
