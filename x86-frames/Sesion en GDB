@@ -1,0 +1,98 @@
+(gdb) b backtrace
+Punto de interrupción 1 at 0x8048506: file backtrace.c, line 5.
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/rnet/Escritorio/UBA/tpSisopKern0/x86-frames/backtrace 
+
+Breakpoint 1, backtrace () at backtrace.c:5
+5	void backtrace(){
+(gdb) bt
+#0  backtrace () at backtrace.c:5
+#1  0x0804855d in my_write (fd=2, msg=0x80486bb, count=15) at backtrace.c:18
+#2  0x080485a9 in recurse (level=0) at backtrace.c:27
+#3  0x080485ba in recurse (level=1) at backtrace.c:25
+#4  0x080485ba in recurse (level=2) at backtrace.c:25
+#5  0x080485ba in recurse (level=3) at backtrace.c:25
+#6  0x080485ba in recurse (level=4) at backtrace.c:25
+#7  0x080485ba in recurse (level=5) at backtrace.c:25
+#8  0x080485cc in start_call_tree () at backtrace.c:31
+#9  0x080485e7 in main () at backtrace.c:35
+(gdb) list
+1	#include <stdint.h>
+2	#include <stdio.h>
+3	#include <unistd.h>
+4	
+5	void backtrace(){
+6	
+7	    int *frameEbp = (int *)__builtin_frame_address(0);
+8	    frameEbp = (int*)*frameEbp;
+9	    int i = 1;
+10	
+(gdb) until 14
+#1 [0xbffff068] 0x80485a9 ( 0x2 0x80486bb 0xf )
+#2 [0xbffff088] 0x80485ba ( 0x0 0x0 0x0 )
+#3 [0xbffff0a8] 0x80485ba ( 0x1 0xf63d4e2e 0xb7fffaf8 )
+#4 [0xbffff0c8] 0x80485ba ( 0x2 0x1 0xb7fd1410 )
+#5 [0xbffff0e8] 0x80485ba ( 0x3 0x0 0x0 )
+#6 [0xbffff108] 0x80485ba ( 0x4 0xbffff3a0 0xb7e064a9 )
+#7 [0xbffff128] 0x80485cc ( 0x5 0x0 0xbffff20c )
+#8 [0xbffff148] 0x80485e7 ( 0xb7fe79b0 0xbffff170 0x0 )
+#9 [0xbffff158] 0xb7deee81 ( 0xb7fae000 0xb7fae000 0x0 )
+backtrace () at backtrace.c:15
+15	}
+(gdb) up
+#1  0x0804855d in my_write (fd=2, msg=0x80486bb, count=15) at backtrace.c:18
+18	    backtrace();
+(gdb) p/x $ebp
+$1 = 0xbffff068
+(gdb) up
+#2  0x080485a9 in recurse (level=0) at backtrace.c:27
+27	        my_write(2, "Hello, world!\n", 15);
+(gdb) p/x $ebp
+$2 = 0xbffff088
+(gdb) up
+#3  0x080485ba in recurse (level=1) at backtrace.c:25
+25	        recurse(level - 1);
+(gdb) p/x $ebp
+$3 = 0xbffff0a8
+(gdb) up
+#4  0x080485ba in recurse (level=2) at backtrace.c:25
+25	        recurse(level - 1);
+(gdb) p/x $ebp
+$4 = 0xbffff0c8
+(gdb) up
+#5  0x080485ba in recurse (level=3) at backtrace.c:25
+25	        recurse(level - 1);
+(gdb) p/x $ebp
+$5 = 0xbffff0e8
+(gdb) up
+#6  0x080485ba in recurse (level=4) at backtrace.c:25
+25	        recurse(level - 1);
+(gdb) p/x $ebp
+$6 = 0xbffff108
+(gdb) up
+#7  0x080485ba in recurse (level=5) at backtrace.c:25
+25	        recurse(level - 1);
+(gdb) p/x $ebp
+$7 = 0xbffff128
+(gdb) up
+#8  0x080485cc in start_call_tree () at backtrace.c:31
+31	    recurse(5);
+(gdb) p/x $ebp
+$8 = 0xbffff148
+(gdb) up
+#9  0x080485e7 in main () at backtrace.c:35
+35	    start_call_tree();
+(gdb) p/x $ebp
+$9 = 0xbffff158
+(gdb) up
+Initial frame selected; you cannot go up.
+(gdb) frame 0
+#0  backtrace () at backtrace.c:15
+15	}
+(gdb) c
+Continuando.
+=> write(2, 0x80486bb, 15)
+Hello, world!
+[Inferior 1 (process 1832) exited normally]
